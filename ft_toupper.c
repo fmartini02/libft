@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:45:20 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/27 22:45:20 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/28 16:11:49 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/28 16:11:53 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_toupper(int c)
 {
-	int	res;
-
-	if (c >= 97 && c <= 122)
-		res = c - 32;
-	else
-		res = c;
-	return (res);
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
+	return (c);
 }

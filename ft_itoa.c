@@ -3,82 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:38:32 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/27 22:38:32 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/28 16:07:54 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/28 16:07:56 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_len(long int n)
+static char	*initialize(size_t *pow, size_t *len, int n)
 {
-	int	len;
+	char	*str;
 
-	len = 0;
-	while (n != 0)
+	*pow = 1;
+	*len = 1;
+	if (n < 0)
 	{
-		n /= 10;
-		len++;
+		if (n == INT_MIN)
+			n = -2147483647;
+		n = -n;
+		*len = 2;
 	}
-	return (len);
+	while (*pow <= (size_t)n / 10)
+	{
+		*pow = *pow * 10;
+		*len = *len + 1;
+	}
+	str = (char *)malloc((*len + 1) * sizeof(char));
+	return (str);
 }
 
-char	*ft_itoa2(long int n, int len, int neg)
+static int	ft_check(int *n, char *str, size_t *pow)
 {
-	char	*res;
+	int	offset;
 
-	res = malloc(len + 1);
-	res[len] = '\0';
-	len--;
-	if (neg)
+	offset = 0;
+	if (*n == INT_MIN)
 	{
-		res[0] = '-';
-		while (len > 0)
-		{
-			res[len] = (n % 10) + 48;
-			n /= 10;
-			len--;
-		}
+		str[1] = '2';
+		*n = -147483648;
+		*pow = *pow / 10;
+		offset++;
 	}
-	else
+	if (*n < 0)
 	{
-		while (len >= 0)
-		{
-			res[len] = (n % 10) + 48;
-			n /= 10;
-			len--;
-		}
+		*str = '-';
+		*n = -*n;
+		offset++;
 	}
-	return (res);
+	return (offset);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*res;
-	int		neg;
-	int		len;
-	long	temp;
+	char	*str;
+	size_t	pow;
+	size_t	len;
 
-	neg = 0;
-	temp = n;
-	if (n == 0)
+	str = initialize(&pow, &len, n);
+	if (!str)
+		return (NULL);
+	str += ft_check(&n, str, &pow);
+	while (pow)
 	{
-		res = malloc(2);
-		res[0] = '0';
-		res[1] = '\0';
+		*str++ = (n / pow) + '0';
+		n %= pow;
+		pow /= 10;
 	}
-	else
-	{
-		len = ft_len(temp);
-		if (n < 0)
-		{
-			neg = 1;
-			temp *= -1;
-			len++;
-		}
-		res = ft_itoa2(temp, len, neg);
-	}
-	return (res);
+	*str = 0;
+	str -= len;
+	return (str);
 }

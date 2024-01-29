@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:43:06 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/27 22:43:06 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/28 16:10:25 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/28 16:10:31 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,28 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	lens1;
-	size_t	lens2;
-	char	*res;
+	char	*joint;
+	size_t	len;
+	size_t	i;
 
-	lens1 = ft_strlen(s1);
-	lens2 = ft_strlen(s2);
-	res = malloc(sizeof(char) * lens1 + lens2 + 1);
-	ft_memcpy(res, s1, lens1);
-	ft_memcpy(&res[lens1], s2, lens2);
-	res[lens1 + lens2] = '\0';
-	return (res);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	joint = (char *)malloc(((len + 1) * sizeof(char)));
+	if (!joint)
+		return (NULL);
+	i = 0;
+	while (len-- && *s1)
+	{
+		joint[i] = *s1;
+		s1++;
+		i++;
+	}
+	len++;
+	while (len-- && *s2)
+	{
+		joint[i] = *s2;
+		s2++;
+		i++;
+	}
+	joint[i] = 0;
+	return (joint);
 }

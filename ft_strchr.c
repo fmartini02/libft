@@ -3,26 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:42:24 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/27 22:42:24 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/28 16:10:01 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/28 16:10:04 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 char	*ft_strchr(const char *s, int c)
 {
-	int		i;
-	char	*res;
-
-	i = 0;
-	while (s[i] != c && s[i] != '\0')
+	while (*s)
 	{
-		i++;
+		if (*s == (unsigned char)c)
+			return ((char *)s);
+		s++;
 	}
-	if (s[i] == c)
-		res = (char *)s + i;
+	if ((unsigned char) c == 0)
+		return ((char *)s);
 	else
-		res = 0;
-	return (res);
+		return (0);
 }

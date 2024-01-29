@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:37:53 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/27 22:37:53 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/28 16:07:36 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/28 16:07:38 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isascii(int c)
 {
-	int	res;
-
 	if (c >= 0 && c <= 127)
-		res = 1;
-	else
-		res = 0;
-	return (res);
+		return (1);
+	return (0);
 }

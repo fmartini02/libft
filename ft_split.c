@@ -3,40 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/27 22:42:16 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/27 22:42:16 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/28 16:09:56 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/28 16:09:58 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static size_t	get_wc(char const *s, char c)
+{
+	size_t	wc;
+	int		check;
+
+	check = 1;
+	wc = 0;
+	while (*s)
+	{
+		if (*s == c)
+			check = 1;
+		else
+		{
+			if (check)
+				wc++;
+			check = 0;
+		}
+		s++;
+	}
+	return (wc);
+}
+
+static char	*initialize_c(const char *s, char c, size_t *skip_c)
+{
+	char	*str;
+	size_t	wl;
+
+	wl = 0;
+	*skip_c = 0;
+	while (*s == c)
+	{
+		*skip_c = *skip_c + 1;
+		s++;
+	}
+	while (s[wl] != c && s[wl] != 0)
+		wl++;
+	str = (char *)malloc((wl + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (*s != c && *s != '\0')
+		*str++ = *s++;
+	*str = 0;
+	str -= wl;
+	*skip_c += wl;
+	return (str);
+}
+
 char	**ft_split(char const *s, char c)
 {
-	char	**res;
-	int		i;
-	int		ii;
-	int		lensub;
-	char	*n;
+	char	**split;
+	size_t	skip_c;
+	size_t	wc;
+	size_t	i;
 
-	n = 0;
-	res = (char **)ft_calloc(sizeof(char *), (ft_strlen(s) / 2) + 8);
-	res[0] = n;
 	i = 0;
-	ii = 0;
-	while (s[i])
+	wc = get_wc(s, c);
+	split = (char **)malloc((wc + 1) * sizeof(char *));
+	if (!split)
+		return (NULL);
+	while (i < wc)
 	{
-		while (s[i] == c)
-			i++;
-		lensub = i;
-		while (s[lensub] != c && s[lensub])
-			lensub++;
-		lensub -= i;
-		if (lensub)
-			res[ii] = ft_substr(s, i, lensub);
-		ii++;
-		i += lensub;
+		split[i] = initialize_c(s, c, &skip_c);
+		s += skip_c;
+		i++;
 	}
-	return (res);
+	split[i] = 0;
+	return (split);
 }
