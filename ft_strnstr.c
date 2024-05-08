@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 16:11:08 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/28 16:11:13 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/27 22:44:09 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/27 22:44:09 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,29 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
+	char	*res;
 	size_t	i;
+	size_t	j;
 
+	res = 0;
 	i = 0;
-	while (len-- && *big && little[i])
+	j = 0;
+	if (little[0] == '\0')
+		res = (char *)big;
+	else
 	{
-		if (*big == little[i])
-			i++;
-		else if (i)
+		while (big[i] && little[j] != '\0' && (i + j) < len)
 		{
-			len += i;
-			big -= i;
-			i = 0;
+			if (big[i + j] == little[j])
+				j++;
+			else
+			{
+				j = 0;
+				i++;
+			}
 		}
-		big++;
+		if (little[j] == '\0')
+			res = (char *)&big[i];
 	}
-	if (!little[i])
-		return ((char *)(big - i));
-	return (NULL);
+	return (res);
 }

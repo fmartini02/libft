@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 16:07:42 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/28 16:07:45 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/27 22:38:12 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/27 22:38:12 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isdigit(int c)
 {
-	return (c >= '0' && c <= '9');
+	int	res;
+
+	if (c >= 48 && c <= 57)
+		res = 1;
+	else
+		res = 0;
+	return (res);
 }

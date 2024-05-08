@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 16:09:12 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/28 16:09:14 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/27 22:40:39 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/27 22:40:39 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	*d;
+	size_t	i;
 
-	d = dest;
-	while (n && !(!dest && !src))
+	i = 0;
+	while (i != n)
 	{
-		*d = *(char *)src;
-		src++;
-		d++;
-		n--;
+		((char *)dest)[i] = ((char *)src)[i];
+		i++;
 	}
 	return (dest);
 }

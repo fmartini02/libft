@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmartini <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fmartini <fmartini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 16:07:27 by fmartini          #+#    #+#             */
-/*   Updated: 2024/01/28 16:07:30 by fmartini         ###   ########.fr       */
+/*   Created: 2024/01/27 22:37:43 by fmartini          #+#    #+#             */
+/*   Updated: 2024/01/27 22:37:43 by fmartini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isalpha(int c)
 {
-	if (c < 'A' || (c > 'Z' && c < 'a') || c > 'z')
-		return (0);
-	return (1);
+	int	res;
+
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		res = 1;
+	else
+		res = 0;
+	return (res);
 }
