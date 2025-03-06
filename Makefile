@@ -1,57 +1,56 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: fmartini <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/09 16:18:30 by fmartini          #+#    #+#              #
-#    Updated: 2024/04/09 16:18:30 by fmartini         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#************************************************************************************#
 
-SRCS		= ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
-		  ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c \
-		  ft_memcpy.c ft_memmove.c ft_strlcpy.c ft_strlcat.c \
-		  ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c \
-		  ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c \
-		  ft_atoi.c ft_calloc.c ft_strdup.c \
-		  ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
-		  ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c \
-		  ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-		  ft_strcpy_till_char.c ft_strlen_till_char.c ft_matlen.c\
-		  ft_word_len.c ft_skip_spaces.c ft_print_mat.c
-SRCS_BONUS	= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
-			ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
-			ft_lstmap.c
+.SILENT:
 
-OBJS		= $(SRCS:.c=.o)
-OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
+PRINTF = ft_printf/libftprintf.a
 
-NAME		= libft.a
+GNL = get_next_line/gnl.a
 
-CC		= cc
-RM		= rm -f
+STD_LIB = std_fun/std_lib.a
 
-CFLAGS		= -Wall -Wextra -Werror
+NAME = libft.a
 
-%.o: %.c
-		$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -s
+$(PRINTF):
+	make --no-print-directory -C ft_printf/
 
-$(NAME):	$(OBJS)
-		ar rc $(NAME) $(OBJS)
+$(GNL):
+	make --no-print-directory -C get_next_line/
 
-all:		$(NAME)
+$(STD_LIB):
+	make --no-print-directory -C std_fun/
 
-bonus:		all $(OBJS_BONUS)
-		ar rc $(NAME) $(OBJS_BONUS)
+all: $(NAME)
+
+$(NAME): $(STD_LIB) $(GNL) $(PRINTF)
+	rm -f $(NAME)
+	ar -x $(STD_LIB)
+	ar -x $(GNL)
+	ar -x $(PRINTF)
+	ar rc $(NAME) *.o
+	rm -f *.o
+
+bonus:
+	make --no-print-directory -C ft_printf bonus
+	make --no-print-directory -C get_next_line bonus
+	make --no-print-directory -C std_fun bonus
+	$(MAKE) all
 
 clean:
-		$(RM) $(OBJS) $(OBJS_BONUS)
+	rm -f *.o
+	make --no-print-directory -C std_fun clean
+	make --no-print-directory -C get_next_line clean
+	make --no-print-directory -C ft_printf clean
 
-fclean:		clean
-		$(RM) $(NAME)
+fclean: clean
+	rm -f $(NAME)
+	make --no-print-directory -C std_fun fclean
+	make --no-print-directory -C get_next_line fclean
+	make --no-print-directory -C ft_printf fclean
 
-re:		fclean all
+re: fclean all
 
-.PHONY:		all clean fclean re bonus
+re_bonus: fclean bonus
+
+.PHONY: all clean fclean re bonus $(PRINTF) $(GNL) $(STD_LIB)
+
+
